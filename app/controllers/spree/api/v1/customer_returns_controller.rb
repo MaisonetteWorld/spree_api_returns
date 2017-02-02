@@ -69,9 +69,7 @@ module Spree
                 :return_authorization_id,
                 :inventory_unit_id,
                 :exchange_variant_id,
-                :resellable,
-                :pre_tax_amount,
-                :returned
+                :resellable
               ]
             }
           ]
@@ -84,7 +82,6 @@ module Spree
         def build_return_items_from_params
           return_items_params = permitted_resource_params.delete(:return_items_attributes).values
           @customer_return.return_items = return_items_params.map do |item_params|
-            next unless item_params.delete('returned') == '1'
             return_item = item_params[:id] ? Spree::ReturnItem.find(item_params[:id]) : Spree::ReturnItem.new
             return_item.attributes = item_params
             return_item
